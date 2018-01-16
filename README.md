@@ -6,15 +6,16 @@ Requires:
 
 - Ruby
 - [entr](http://www.entrproject.org/)
+- nc (netcat; If you're on OSX or a Linux, you probably have it already)
 
-`entr` is a small utility that watches a list of given files for changes.
+`entr` is a small utility that watches a list of given files for changes. `nc` is a tool for working with TCP sockets.
 
 ## Try it Out
 
 To run the demo, load IRB with the hot-reloader and the sample code:
 
 ```sh
-> irb -r ./hot_reloader.rb ./lib/skeleton.rb
+> irb -r ./listen_n_load.rb ./lib/skeleton.rb
 ```
 
 In a separate terminal window, run `entr`:
@@ -25,9 +26,9 @@ find lib/*.rb | entr -p ./reloader.sh /_
 
 This is doing the following:
 
-- `find` makes a list of all the files with a `*.rb` extension
-- The pipe (`|`) supplies the list to `entr`
-- `entr` begins watching the list for changes. When one changes, it calls the `reloader.sh` script and supplies the name of the changes file as an argument to that script (`/_`).
+- `find` makes a list of all the files in the `lib` directory with a `*.rb` extension.
+- The pipe (`|`) supplies the list to `entr`.
+- `entr` begins watching the list for changes. When one changes, it calls the `reloader.sh` script and supplies the name of the changed file as an argument to that script (that variable is denoted by `/_`).
 
 In an editor, you can add a new method to the sample code:
 
