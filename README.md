@@ -63,4 +63,4 @@ This approach has some major drawbacks. For instance, while running the demo, tr
 > Skeleton.dance!
 ```
 
-The skeleton can still dance! Thing stick around because this reloader does not do any cleanup.
+The skeleton can still dance! Things stick around because this reloader does not do any cleanup.
