@@ -18,7 +18,7 @@ To run the demo, load IRB with the hot-reloader and the sample code:
 > irb -r ./listen_n_load.rb ./lib/skeleton.rb
 ```
 
-In a separate terminal window, run `entr`:
+In a separate terminal window, pipe a list of files to `entr`:
 
 ```sh
 find lib/*.rb | entr -p ./reloader.sh /_
@@ -55,7 +55,7 @@ Your code was automatically reloaded! Cool, I guess.
 
 ## How it Works
 
-The `listen_n_load.rb` file fires up a TCP server listening on a port (2222 in this case). When a file changes, the `reloader.sh` shellscript sends the name of the changed file to the listening server, and the Ruby code reloads it in the background. It does this within a thread; otherwise the TCP server would block IRB from loading when you required it.
+The Ruby TCP server is running in a thread inside your console session. We use a thread because otherwise the TCP server would block the console from loading. Inside the thread, it sits in the background and listens on port 2222. When a file changes, `entr` and the shellscript send the name of the file to that TCP port. The server gets the name of the file and executes some code to load it.
 
 This approach has some major drawbacks. For instance, while running the demo, try deleting the `dance!` method you added. Then in IRB:
 
